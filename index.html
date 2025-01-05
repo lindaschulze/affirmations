@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mirror with Affirmations</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      height: 100vh;
+      background-color: #f5f5f5;
+    }
+    video {
+      transform: scaleX(-1); /* Mirror effect */
+      width: 100%;
+      max-width: 800px;
+      border: 5px solid #000;
+    }
+    .affirmation {
+      position: fixed;
+      bottom: 10px;
+      width: 90%;
+      text-align: center;
+      font-weight: bold;
+      font-family: Arial, sans-serif;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+
+<video id="webcam" autoplay></video>
+<div class="affirmation" id="affirmation"></div>
+
+<script>
+  // Affirmation array
+  const affirmations = [
+    { text: "Ich mag es nicht, wenn Leute mich anstarren, ich kann es aber verstehen", color: "#FF5733", fontSize: "5vh" },
+    { text: "Ich bin zu schön, um zu arbeiten", color: "#33FF57", fontSize: "6vh" },
+    { text: "Ich bin aus Versehen sexy und schlau aufgewacht", color: "#5733FF", fontSize: "5.5vh" },
+    { text: "bb steht für bad bitch", color: "#FF33A1", fontSize: "5vh" },
+    { text: "Wow, siehst du gut aus!", color: "#33FFF5", fontSize: "6vh" },
+    { text: "Gutes Aussehen ist nicht alles, aber ich habe es trotzdem", color: "#FFD700", fontSize: "5vh" },
+    { text: "Atme weiter, wenn du denkst, du bist süß", color: "#FF5733", fontSize: "6vh" },
+    { text: "Man konkurriert nicht, wo man sich nicht vergleicht", color: "#33FF57", fontSize: "5vh" },
+    { text: "Ich bin zu heiß, um mich zu streiten", color: "#5733FF", fontSize: "6vh" },
+    { text: "Mein Körper ist für Spa Days gemacht", color: "#FF33A1", fontSize: "5.5vh" },
+  ];
+
+  let currentAffirmation = 0;
+
+  // Access the webcam
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(stream => {
+      const videoElement = document.getElementById('webcam');
+      videoElement.srcObject = stream;
+    })
+    .catch(err => {
+      console.error("Error accessing the webcam:", err);
+    });
+
+  // Change affirmations every 15 seconds
+  function updateAffirmation() {
+    const affirmationElement = document.getElementById('affirmation');
+    const affirmation = affirmations[currentAffirmation];
+    affirmationElement.textContent = affirmation.text;
+    affirmationElement.style.color = affirmation.color;
+    affirmationElement.style.fontSize = affirmation.fontSize;
+    currentAffirmation = (currentAffirmation + 1) % affirmations.length;
+  }
+
+  // Initial load
+  updateAffirmation();
+  setInterval(updateAffirmation, 15000);
+</script>
+
+</body>
+</html>
