@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -45,7 +46,7 @@
 </div>
 
 <script>
-  // Updated affirmation array
+  // Affirmation array
   const affirmations = [
     { text: "Ich mag es nicht, wenn Leute mich anstarren, ich kann es aber verstehen", color: "#FF5733", fontSize: "5vh" },
     { text: "Ich bin zu schön, um zu arbeiten", color: "#33FF57", fontSize: "6vh" },
@@ -62,8 +63,6 @@
     { text: "Ich brauche keine Trophäe, um mir zu sagen, dass ich das Beste bin", color: "#FFD700", fontSize: "5.5vh" },
   ];
 
-  let currentAffirmation = 0;
-
   // Access the webcam
   navigator.mediaDevices.getUserMedia({ video: true })
     .then(stream => {
@@ -74,19 +73,19 @@
       console.error("Error accessing the webcam:", err);
     });
 
-  // Change affirmations every 15 seconds
+  // Change affirmations every 10 seconds
   function updateAffirmation() {
     const affirmationElement = document.getElementById('affirmation');
-    const affirmation = affirmations[currentAffirmation];
+    const randomIndex = Math.floor(Math.random() * affirmations.length);
+    const affirmation = affirmations[randomIndex];
     affirmationElement.textContent = affirmation.text;
     affirmationElement.style.color = affirmation.color;
     affirmationElement.style.fontSize = affirmation.fontSize;
-    currentAffirmation = (currentAffirmation + 1) % affirmations.length;
   }
 
   // Initial load
   updateAffirmation();
-  setInterval(updateAffirmation, 15000);
+  setInterval(updateAffirmation, 10000);
 </script>
 
 </body>
